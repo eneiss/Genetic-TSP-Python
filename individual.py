@@ -1,6 +1,7 @@
 from typing import List, Tuple
 from math import sqrt
 import matplotlib.pyplot as plt
+from sys import stderr
 
 from parameters import *
 
@@ -26,12 +27,12 @@ class Individual:
     # computes the fitness value for the given individual
     # note: the higher its fitness, the better the individual is
     # -> fitness and path length must have opposite variations
-    def getFitness(self, cities, dist_mat) -> float:
+    def getFitness(self, dist_mat) -> float:
 
         if self._fitness > 0:   # fitness already computed
             return self._fitness
         else:                   # fitness not computed yet, do it here !
-            # todo trou ici
+            # todo >>> leave this part blank ?
             length = 0
             for i in range(nb_cities - 1):
                 city1_index = self.route[i]
@@ -41,7 +42,7 @@ class Individual:
             # don't forget to come back to the starting point! (I did)
             length += dist_mat[self.route[nb_cities - 1]][self.route[0]]
             self._fitness = 1000 / length
-            print(f"length of {self.id}: {length}, fitness: {self._fitness}")       # debug
+            print(f"length of {self.id}: {length}, fitness: {self._fitness}", file=stderr)       # debug
             return self._fitness  # arbitrary factor to keep fitness close to 1
 
     # plots an individual on a 2D plot
@@ -52,7 +53,7 @@ class Individual:
         x_values.append(cities[self.route[0]][0])
         y_values.append(cities[self.route[0]][1])
 
-        plt.title(f"Gen. {self.generation_id} no {self.id}, fitness: {self.getFitness(cities)}")
+        plt.title(f"Gen. {self.generation_id} no {self.id}, fitness: {self.getFitness()}")
         plt.plot(x_values, y_values)
         plt.show()
 
