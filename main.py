@@ -34,14 +34,17 @@ for it in range(nb_iter):
 
     # --- ranking of the individuals in the current population
     ranking = getRanking(population, cities, distance_matrix)
-    print(f"Ranking for generation {it}: {ranking}")
+    # print(f"Ranking for generation {it}: {ranking}")    # debug
 
-    # debug & visuals : plot the best individual of each generation
-    population[ranking.index(0)].plot(cities, distance_matrix)
+    # debug & visuals : plot the best individual of each generation every now and then
+    if it % 10 == 0:
+        best_individual = population[ranking.index(0)]
+        print(best_individual)
+        best_individual.plot(cities, distance_matrix)
 
     # --- mating pool selection
     mating_pool = selectMatingPool(ranking)
-    print(f"mating_pool : {mating_pool}")
+    # print(f"mating_pool : {mating_pool}")   # debug
 
     new_generation = []
 
@@ -65,4 +68,4 @@ for it in range(nb_iter):
     # end of this iteration: update population and current generation number
     population = new_generation
     for ind in population:
-        ind.generation_id += 1
+        ind.generation_id = it

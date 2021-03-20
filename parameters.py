@@ -9,7 +9,7 @@ nb_cities = 30
 # --- genetic algorithm parameters
 # -> can be tweaked (almost) freely to study convergence speed and algorithm efficiency
 population_size = 10
-nb_iter = 10
+nb_iter = 200
 mating_pool_proportion: float = 0.4
 elite_proportion: float = 0.2
 
