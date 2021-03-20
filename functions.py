@@ -1,4 +1,3 @@
-import random
 from math import sqrt
 
 from individual import *
@@ -78,13 +77,6 @@ def crossover(parent1: Individual, parent2: Individual) -> Individual:
             child_route.append(gene)
 
     return Individual(child_route, parent1.generation_id + 1)
-
-
-# applies random mutations to an individual (in-place)
-def mutate(individual: Individual) -> None:
-    # todo >>> leave this part blank
-    # todo write this
-    pass
 
 
 # another one-liner that returns the indexes of the best individuals that will

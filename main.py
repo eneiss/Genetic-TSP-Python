@@ -6,6 +6,9 @@ Genetic algorithm implementation for solving the TSP problem
 See parameters.py for problem & algorithm parameters
 """
 
+# todo:
+#  - keep track of the evolution of fitness across generations and plot it in the end
+
 # cities are randomly generated on a square grid (discrete space)
 # note: upper bound of randrange is exclusive, while randint is inclusive
 cities: List[Tuple[int, int]] = [(random.randrange(0, grid_size), random.randrange(0, grid_size))
@@ -37,7 +40,7 @@ for it in range(nb_iter):
     # print(f"Ranking for generation {it}: {ranking}")    # debug
 
     # debug & visuals : plot the best individual of each generation every now and then
-    if it % 10 == 0:
+    if it % 50 == 0:
         best_individual = population[ranking.index(0)]
         print(best_individual)
         best_individual.plot(cities, distance_matrix)
@@ -61,7 +64,7 @@ for it in range(nb_iter):
         child = crossover(population[mating_pool[iparent1]], population[mating_pool[iparent2]])
 
         # --- mutation
-        mutate(child)
+        child.mutate()      # comment this to disable mutation
 
         new_generation.append(child)
 

@@ -1,5 +1,6 @@
 from typing import List, Tuple
 import matplotlib.pyplot as plt
+import random
 from sys import stderr
 
 from parameters import *
@@ -55,6 +56,17 @@ class Individual:
         plt.title(f"Gen. {self.generation_id} no {self.id}, fitness: {self.getFitness(dist_mat)}")
         plt.plot(x_values, y_values)
         plt.show()
+
+    # applies the individual a random mutation according to the mutation rate
+    # todo check if there's no issue with getFitness since this changes the individual's fitness
+    def mutate(self) -> None:
+        # >>> todo leave this part blank -> hint: swap mutation
+        # swap two cities with a chance of mutation_rate
+        if random.random() < mutation_rate:
+            c1 = random.randrange(nb_cities)
+            c2 = random.randrange(nb_cities)
+
+            self.route[c1], self.route[c2] = self.route[c2], self.route[c1]
 
     # convenient for printing
     def __str__(self):
