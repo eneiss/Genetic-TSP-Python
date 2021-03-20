@@ -1,4 +1,5 @@
 import random
+from math import sqrt
 
 from individual import *
 
@@ -18,7 +19,7 @@ def randomIndividual(gen_id) -> Individual:
     return Individual(route, gen_id)
 
 
-# creates the distance matrix for each possible couple of cities
+# creates the Euclidean distance matrix for each possible couple of cities
 # (used to optimize fitness computation)
 def getDistanceMatrix(cities: List[Tuple[int, int]]) -> List[List[float]]:
     res = [[None for __ in range(len(cities))] for _ in range(len(cities))]
@@ -36,17 +37,18 @@ def getDistanceMatrix(cities: List[Tuple[int, int]]) -> List[List[float]]:
 # e.g. result[i] = 3 means that the individual at population[i] is the 4th
 # fittest individual in the current population (not 3rd because the fittest
 # is ranked 0)
+# todo maybe the opposite (ranking[0] = index of the best individual in population) ?
 def getRanking(population: List[Individual], cities, dist_mat) -> List[int]:
     return [sorted(population, key=lambda e: e.getFitness(dist_mat), reverse=True).index(indiv) for indiv in population]
 
 
 # returns a list of indexes of the individuals (in the population array)
 # selected to be in the current generation's mating pool
-# note: current selection method is todo  fitness proportionate selection?
+# note: current selection method is to take only the best individuals
+# -> maybe a bit poor, todo  fitness proportionate selection?
 def selectMatingPool(ranking: List[int]) -> List[int]:
-    pass
-    # todo
-    # return ranking[:int(population_size*mating_pool_proportion)]  # absolutely not
+    return [i for i in range(population_size) if ranking[i] <= mating_pool_size]
+
 
 # generates a child from 2 parents by keeping characteristics of both
 def crossover(parent1: Individual, parent2: Individual) -> Individual:
@@ -88,9 +90,9 @@ def mutate(individual: Individual) -> None:
 # another one-liner that returns the indexes of the best individuals that will
 # be carried on to the next generation (elitism), according to the algorithm
 # parameters
-def elitistSelection(ranking: List[int]):
+def elitistSelection(ranking: List[int]) -> List[int]:
     # todo >>> leave this part blank
-    return (i for i in range(nb_cities) if ranking[i] <= elite_proportion*population_size)
+    return [i for i in range(population_size) if ranking[i] <= elite_size]
 
 
 # plots the cities on a scatter plot

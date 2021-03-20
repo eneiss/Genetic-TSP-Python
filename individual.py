@@ -1,5 +1,4 @@
 from typing import List, Tuple
-from math import sqrt
 import matplotlib.pyplot as plt
 from sys import stderr
 
@@ -37,23 +36,23 @@ class Individual:
             for i in range(nb_cities - 1):
                 city1_index = self.route[i]
                 city2_index = self.route[i + 1]
-                # Euclidean distance
                 length += dist_mat[city1_index][city2_index]
             # don't forget to come back to the starting point! (I did)
             length += dist_mat[self.route[nb_cities - 1]][self.route[0]]
             self._fitness = 1000 / length
-            print(f"length of {self.id}: {length}, fitness: {self._fitness}", file=stderr)       # debug
+            # debug
+            # print(f"length of {self.id}: {length}, fitness: {self._fitness}", file=stderr)       # debug
             return self._fitness  # arbitrary factor to keep fitness close to 1
 
     # plots an individual on a 2D plot
-    def plot(self, cities) -> None:
+    def plot(self, cities, dist_mat) -> None:
         x_values = [cities[point][0] for point in self.route]
         y_values = [cities[point][1] for point in self.route]
         # don't forget to come back to the starting point! (I did)
         x_values.append(cities[self.route[0]][0])
         y_values.append(cities[self.route[0]][1])
 
-        plt.title(f"Gen. {self.generation_id} no {self.id}, fitness: {self.getFitness()}")
+        plt.title(f"Gen. {self.generation_id} no {self.id}, fitness: {self.getFitness(dist_mat)}")
         plt.plot(x_values, y_values)
         plt.show()
 

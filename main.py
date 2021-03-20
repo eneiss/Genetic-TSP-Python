@@ -28,18 +28,41 @@ for _ in range(population_size):
 for it in range(nb_iter):
 
     # for ind in population:
-    #     ind.plot(cities)
+    #     ind.plot(cities, distance_matrix)
+
+    # todo : select mating pool, apply elitism, crossover & mutate, update gen nb
 
     # --- ranking of the individuals in the current population
     ranking = getRanking(population, cities, distance_matrix)
     print(f"Ranking for generation {it}: {ranking}")
 
+    # debug & visuals : plot the best individual of each generation
+    population[ranking.index(0)].plot(cities, distance_matrix)
+
     # --- mating pool selection
-    # mating_pool = []  # todo
-    # print(f"mating_pool : {mating_pool}")
+    mating_pool = selectMatingPool(ranking)
+    print(f"mating_pool : {mating_pool}")
 
-    # todo : select mating pool, apply elitism, crossover & mutate, update gen nb
+    new_generation = []
 
-    # end of this iteration: update current generation number
+    # --- elitism
+    elite = elitistSelection(ranking)
+    for ielite in elite:
+        new_generation.append(population[ielite])
+
+    # --- breeding & mutation : 'fill in' the rest of the population with new individuals
+    for ichild in range(population_size - elite_size):
+
+        # --- crossover (= breeding)
+        iparent1, iparent2 = random.randrange(mating_pool_size), random.randrange(mating_pool_size)
+        child = crossover(population[mating_pool[iparent1]], population[mating_pool[iparent2]])
+
+        # --- mutation
+        mutate(child)
+
+        new_generation.append(child)
+
+    # end of this iteration: update population and current generation number
+    population = new_generation
     for ind in population:
         ind.generation_id += 1
