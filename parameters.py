@@ -12,7 +12,7 @@ population_size = 10
 nb_iter = 2000
 mating_pool_proportion: float = 0.4
 elite_proportion: float = 0.2
-mutation_rate = 0.3
+mutation_rate = 0.6
 
 # derived parameters (used to simplify expressions for a better understanding)
 mating_pool_size = int(mating_pool_proportion * population_size)

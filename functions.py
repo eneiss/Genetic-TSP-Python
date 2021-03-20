@@ -38,7 +38,7 @@ def getDistanceMatrix(cities: List[Tuple[int, int]]) -> List[List[float]]:
 # is ranked 0)
 # todo maybe the opposite (ranking[0] = index of the best individual in population) ?
 def getRanking(population: List[Individual], cities, dist_mat) -> List[int]:
-    return [sorted(population, key=lambda e: e.getFitness(dist_mat), reverse=True).index(indiv) for indiv in population]
+    return [sorted(population, key=lambda e: e.getFitness(), reverse=True).index(ind) for ind in population]
 
 
 # returns a list of indexes of the individuals (in the population array)
@@ -95,3 +95,12 @@ def plotCities(cities) -> None:
     plt.title("Cities")
     plt.scatter(x_values, y_values)
     plt.show()
+
+
+def plotFitnessEvolution(fitness: List[float]) -> None:
+    plt.plot(fitness)
+    plt.title("Fitness evolution across generations")
+    plt.ylabel("Fitness")
+    plt.xlabel("Generation number")
+    plt.show()
+    pass

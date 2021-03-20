@@ -6,8 +6,6 @@ Genetic algorithm implementation for solving the TSP problem
 See parameters.py for problem & algorithm parameters
 """
 
-# todo:
-#  - keep track of the evolution of fitness across generations and plot it in the end
 
 # cities are randomly generated on a square grid (discrete space)
 # note: upper bound of randrange is exclusive, while randint is inclusive
@@ -21,29 +19,44 @@ distance_matrix = getDistanceMatrix(cities)
 # --- plot the generated cities on a scatter plot
 plotCities(cities)
 
-# initialize population randomly
+# --- initialize population randomly
 population: List[Individual] = []
 for _ in range(population_size):
     population.append(randomIndividual(gen_id=0))
 
-# --- main loop, where the selection/breeding process occurs
+# initial fitness computing
+for ind in population:
+    ind.computeFitness(distance_matrix)
+
+best_fitness = []       # track the population's evolution
+
+# main loop, where the evolutionary process occurs
 # todo maybe change for a minimum fitness or population convergence
 for it in range(nb_iter):
 
-    # for ind in population:
-    #     ind.plot(cities, distance_matrix)
-
-    # todo : select mating pool, apply elitism, crossover & mutate, update gen nb
+    """
+    Evolutionary process implemented here:
+        - rank the current population members according to their fitness
+        - select the mating pool and elite according to the ranking
+        - make the individuals in the mating pool breed to create new individuals
+        - apply random mutations to these newborn individuals
+        - update the population with newborn individuals + elite of the previous generation
+    """
 
     # --- ranking of the individuals in the current population
     ranking = getRanking(population, cities, distance_matrix)
-    # print(f"Ranking for generation {it}: {ranking}")    # debug
+
+    # evolution tracking
+    best_individual = population[ranking.index(0)]
+    best_fitness.append(best_individual.getFitness())
+    # fixme best fitness sometimes regressing??
+    if it > 0 and best_fitness[it-1] - best_individual.getFitness() > 0.0001:   # epsilon for float error
+        print("Is that a bug I see?", file=stderr)
 
     # debug & visuals : plot the best individual of each generation every now and then
-    if it % 50 == 0:
-        best_individual = population[ranking.index(0)]
+    if it % 100 == 0:
         print(best_individual)
-        best_individual.plot(cities, distance_matrix)
+        best_individual.plot(cities)
 
     # --- mating pool selection
     mating_pool = selectMatingPool(ranking)
@@ -60,11 +73,15 @@ for it in range(nb_iter):
     for ichild in range(population_size - elite_size):
 
         # --- crossover (= breeding)
+        # todo have each parent breed only once (if even number of parents)?
         iparent1, iparent2 = random.randrange(mating_pool_size), random.randrange(mating_pool_size)
         child = crossover(population[mating_pool[iparent1]], population[mating_pool[iparent2]])
 
         # --- mutation
         child.mutate()      # comment this to disable mutation
+
+        # --- compute the fitness of new individuals only
+        child.computeFitness(distance_matrix)
 
         new_generation.append(child)
 
@@ -72,3 +89,6 @@ for it in range(nb_iter):
     population = new_generation
     for ind in population:
         ind.generation_id = it
+
+
+plotFitnessEvolution(best_fitness)

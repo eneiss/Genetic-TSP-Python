@@ -24,36 +24,40 @@ class Individual:
         self._fitness: float = 0
         Individual.__nb_individuals += 1
 
-    # computes the fitness value for the given individual
-    # note: the higher its fitness, the better the individual is
-    # -> fitness and path length must have opposite variations
-    def getFitness(self, dist_mat) -> float:
+    # get or compute the individual's fitness
+    def getFitness(self) -> float:
 
         if self._fitness > 0:   # fitness already computed
             return self._fitness
         else:                   # fitness not computed yet, do it here !
-            # todo >>> leave this part blank ?
-            length = 0
-            for i in range(nb_cities - 1):
-                city1_index = self.route[i]
-                city2_index = self.route[i + 1]
-                length += dist_mat[city1_index][city2_index]
-            # don't forget to come back to the starting point! (I did)
-            length += dist_mat[self.route[nb_cities - 1]][self.route[0]]
-            self._fitness = 1000 / length
-            # debug
-            # print(f"length of {self.id}: {length}, fitness: {self._fitness}", file=stderr)       # debug
-            return self._fitness  # arbitrary factor to keep fitness close to 1
+            raise Exception("Tried to get the fitness of an individual whose fitness has not been computed yet.")
+
+    # computes the fitness value for the given individual
+    # note: the higher its fitness, the better the individual is
+    # -> fitness and path length must have opposite variations
+    def computeFitness(self, dist_mat):
+        # todo >>> leave this part blank ?
+        length = 0
+        for i in range(nb_cities - 1):
+            city1_index = self.route[i]
+            city2_index = self.route[i + 1]
+            length += dist_mat[city1_index][city2_index]
+
+        # don't forget to come back to the starting point! (I did)
+        length += dist_mat[self.route[nb_cities - 1]][self.route[0]]
+
+        self._fitness = 1000000 / length  # arbitrary factor to keep fitness readable
+        return self._fitness
 
     # plots an individual on a 2D plot
-    def plot(self, cities, dist_mat) -> None:
+    def plot(self, cities) -> None:
         x_values = [cities[point][0] for point in self.route]
         y_values = [cities[point][1] for point in self.route]
         # don't forget to come back to the starting point! (I did)
         x_values.append(cities[self.route[0]][0])
         y_values.append(cities[self.route[0]][1])
 
-        plt.title(f"Gen. {self.generation_id} no {self.id}, fitness: {self.getFitness(dist_mat)}")
+        plt.title(f"Gen. {self.generation_id} no {self.id}, fitness: {self.getFitness()}")
         plt.plot(x_values, y_values)
         plt.show()
 
