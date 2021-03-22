@@ -46,7 +46,7 @@ def getRanking(population: List[Individual], cities, dist_mat) -> List[int]:
 # note: current selection method is to take only the best individuals
 # -> maybe a bit poor, todo  fitness proportionate selection?
 def selectMatingPool(ranking: List[int]) -> List[int]:
-    return [i for i in range(population_size) if ranking[i] <= mating_pool_size]
+    return [i for i in range(population_size) if ranking[i] < mating_pool_size]
 
 
 # generates a child from 2 parents by keeping characteristics of both
@@ -84,7 +84,7 @@ def crossover(parent1: Individual, parent2: Individual) -> Individual:
 # parameters
 def elitistSelection(ranking: List[int]) -> List[int]:
     # todo >>> leave this part blank
-    return [i for i in range(population_size) if ranking[i] <= elite_size]
+    return [i for i in range(population_size) if ranking[i] < elite_size]
 
 
 # plots the cities on a scatter plot

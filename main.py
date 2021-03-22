@@ -60,12 +60,16 @@ for it in range(nb_iter):
 
     # --- mating pool selection
     mating_pool = selectMatingPool(ranking)
-    # print(f"mating_pool : {mating_pool}")   # debug
+    # debug
+    # print(f"mating_pool : {mating_pool}")
+    assert(len(mating_pool) == mating_pool_size)
 
     new_generation = []
 
     # --- elitism
     elite = elitistSelection(ranking)
+    # debug
+    assert(len(elite) == elite_size)
     for ielite in elite:
         new_generation.append(population[ielite])
 
@@ -89,6 +93,8 @@ for it in range(nb_iter):
     population = new_generation
     for ind in population:
         ind.generation_id = it
+
+    assert(population_size == len(population))
 
 
 plotFitnessEvolution(best_fitness)
