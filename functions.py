@@ -36,7 +36,7 @@ def getDistanceMatrix(cities: List[Tuple[int, int]]) -> List[List[float]]:
 # e.g. result[i] = 3 means that the individual at population[i] is the 4th
 # fittest individual in the current population (not 3rd because the fittest
 # is ranked 0)
-def getRanking(population: List[Individual], cities, dist_mat) -> List[int]:
+def getRanking(population: List[Individual]) -> List[int]:
     return [sorted(population, key=lambda e: e.getFitness(), reverse=True).index(ind) for ind in population]
 
 
