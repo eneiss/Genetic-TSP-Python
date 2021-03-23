@@ -13,7 +13,7 @@ cities: List[Tuple[int, int]] = [(random.randrange(0, grid_size), random.randran
                                  for _ in range(nb_cities)]
 
 # matrix of distances between cities for each possible couple of cities
-distance_matrix = getDistanceMatrix(cities)
+distance_matrix: List[List[float]] = getDistanceMatrix(cities)
 
 # --- plot the generated cities on a scatter plot
 plotCities(cities)
@@ -42,7 +42,7 @@ for it in range(nb_iter):
     """
 
     # --- ranking of the individuals in the current population
-    ranking = getRanking(population, cities, distance_matrix)
+    ranking = getRanking(population)
 
     # evolution tracking
     best_individual = population[ranking.index(0)]

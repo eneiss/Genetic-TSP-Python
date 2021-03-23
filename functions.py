@@ -36,7 +36,7 @@ def getDistanceMatrix(cities: List[Tuple[int, int]]) -> List[List[float]]:
 # e.g. result[i] = 3 means that the individual at population[i] is the 4th
 # fittest individual in the current population (not 3rd because the fittest
 # is ranked 0)
-def getRanking(population: List[Individual], cities, dist_mat) -> List[int]:
+def getRanking(population: List[Individual]) -> List[int]:
     return [sorted(population, key=lambda e: e.getFitness(), reverse=True).index(ind) for ind in population]
 
 
@@ -44,43 +44,30 @@ def getRanking(population: List[Individual], cities, dist_mat) -> List[int]:
 # selected to be in the current generation's mating pool
 # note: current selection method is to take only the best individuals
 def selectMatingPool(ranking: List[int]) -> List[int]:
-    return [i for i in range(population_size) if ranking[i] < mating_pool_size]
+    pass  # todo delete this once you're done
+    # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    # TODO complete the method body here !
+    # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
 # generates a child from 2 parents by keeping characteristics of both
 def crossover(parent1: Individual, parent2: Individual) -> Individual:
-
-    child_route = []
-    child_genes = set()  # optimization for O(1) 'in'
-
-    # note: the first/last city in the tour do not matter as long as the
-    # resulting path is the same, thus we can chose any city in a tour and
-    # reorder the path starting from it
-
-    # algorithm chosen for crossover here: choose a subarray of the first
-    #  parent's genes and transfer them to its child, then take the rest of
-    #  the other parent's genes to fill in the missing genes
-    start_gene = random.randrange(0, len(parent1.route))  # exclusive upper bound
-    stop_gene = random.randint(start_gene + 1, len(parent1.route))  # inclusive upper bound
-
-    # take genes from the first parent
-    for gene in parent1.route[start_gene:stop_gene]:
-        child_route.append(gene)
-        child_genes.add(gene)
-
-    # and fill in the rest with genes of the other parent
-    for gene in parent2.route:
-        if gene not in child_genes:
-            child_route.append(gene)
-
-    return Individual(child_route, parent1.generation_id + 1)
+    pass  # todo delete this once you're done
+    # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    # TODO complete the method body here !
+    #   hint: the crossover doesn't need to be symmetrical
+    #   (no need to keep an equal amount of "genes" from parent1 and parent2)
+    # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
-# another one-liner that returns the indexes of the best individuals that will
-# be carried on to the next generation (elitism), according to the algorithm
-# parameters
+
+# returns the indexes of the best individuals that will be carried on to the
+# next generation (elitism), according to the algorithm parameters
 def elitistSelection(ranking: List[int]) -> List[int]:
-    return [i for i in range(population_size) if ranking[i] < elite_size]
+    pass  # todo delete this once you're done
+    # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    # TODO complete the method body here !
+    # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
 # plots the cities on a scatter plot

@@ -62,12 +62,11 @@ class Individual:
 
     # applies the individual a random mutation according to the mutation rate
     def mutate(self) -> None:
-        # swap two cities with a chance of mutation_rate
-        if random.random() < mutation_rate:
-            c1 = random.randrange(nb_cities)
-            c2 = random.randrange(nb_cities)
-
-            self.route[c1], self.route[c2] = self.route[c2], self.route[c1]
+        pass        # todo delete this once you're done
+        # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        # TODO complete the method body here !
+        #   hint: a possibility would be to swap two cities with a chance of mutation_rate
+        # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     # convenient for printing
     def __str__(self):
