@@ -8,6 +8,7 @@ nb_cities = 100
 
 # --- genetic algorithm parameters
 # -> can be tweaked (almost) freely to study convergence speed and algorithm efficiency
+rng_seed = 42
 population_size = 10
 nb_iter = 50000
 mating_pool_proportion: float = 0.4
