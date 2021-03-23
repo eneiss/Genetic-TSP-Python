@@ -14,7 +14,6 @@ cities: List[Tuple[int, int]] = [(random.randrange(0, grid_size), random.randran
 
 # matrix of distances between cities for each possible couple of cities
 distance_matrix = getDistanceMatrix(cities)
-# print(*distance_matrix, sep="\n")       # debug
 
 # --- plot the generated cities on a scatter plot
 plotCities(cities)
@@ -31,7 +30,6 @@ for ind in population:
 best_fitness = []       # track the population's evolution
 
 # main loop, where the evolutionary process occurs
-# todo maybe change for a minimum fitness or population convergence
 for it in range(nb_iter):
 
     """
@@ -49,27 +47,19 @@ for it in range(nb_iter):
     # evolution tracking
     best_individual = population[ranking.index(0)]
     best_fitness.append(best_individual.getFitness())
-    # fixed best fitness sometimes regressing??
-    if it > 0 and best_fitness[it-1] - best_individual.getFitness() > 0.0001:   # epsilon for float error
-        print("Is that a bug I see?", file=stderr)
 
-    # debug & visuals : plot the best individual of each generation every now and then
+    # plot the best individual of each generation every now and then
     if it % (nb_iter//10) == 0:
         print(best_individual)
         best_individual.plot(cities)
 
     # --- mating pool selection
     mating_pool = selectMatingPool(ranking)
-    # debug
-    # print(f"mating_pool : {mating_pool}")
-    assert(len(mating_pool) == mating_pool_size)
 
     new_generation = []
 
     # --- elitism
     elite = elitistSelection(ranking)
-    # debug
-    assert(len(elite) == elite_size)
     for ielite in elite:
         new_generation.append(population[ielite])
 
@@ -77,7 +67,6 @@ for it in range(nb_iter):
     for ichild in range(population_size - elite_size):
 
         # --- crossover (= breeding)
-        # todo have each parent breed only once (if even number of parents)?
         iparent1, iparent2 = random.randrange(mating_pool_size), random.randrange(mating_pool_size)
         child = crossover(population[mating_pool[iparent1]], population[mating_pool[iparent2]])
 

@@ -4,12 +4,12 @@ Constant parameters used in the genetic algorithm and problem constraints
 
 # --- problem parameters
 grid_size = 200
-nb_cities = 100
+nb_cities = 50
 
 # --- genetic algorithm parameters
 # -> can be tweaked (almost) freely to study convergence speed and algorithm efficiency
 population_size = 10
-nb_iter = 50000
+nb_iter = 5000
 mating_pool_proportion: float = 0.4
 elite_proportion: float = 0.2
 mutation_rate = 0.6

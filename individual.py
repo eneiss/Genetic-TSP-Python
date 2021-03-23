@@ -18,7 +18,7 @@ class Individual:
 
     def __init__(self, route, generation_id):
         # list of city indexes, sorted by visit order
-        self.route: List[int] = route       # todo deep copy ?
+        self.route: List[int] = route
         self.generation_id = generation_id
         self.id = Individual.__nb_individuals
         self._fitness: float = 0
@@ -29,14 +29,13 @@ class Individual:
 
         if self._fitness > 0:   # fitness already computed
             return self._fitness
-        else:                   # fitness not computed yet, do it here !
+        else:                   # fitness not computed yet
             raise Exception("Tried to get the fitness of an individual whose fitness has not been computed yet.")
 
     # computes the fitness value for the given individual
     # note: the higher its fitness, the better the individual is
     # -> fitness and path length must have opposite variations
     def computeFitness(self, dist_mat):
-        # todo >>> leave this part blank ?
         length = 0
         for i in range(nb_cities - 1):
             city1_index = self.route[i]
@@ -62,9 +61,7 @@ class Individual:
         plt.show()
 
     # applies the individual a random mutation according to the mutation rate
-    # todo check if there's no issue with getFitness since this changes the individual's fitness
     def mutate(self) -> None:
-        # >>> todo leave this part blank -> hint: swap mutation
         # swap two cities with a chance of mutation_rate
         if random.random() < mutation_rate:
             c1 = random.randrange(nb_cities)

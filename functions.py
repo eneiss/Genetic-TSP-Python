@@ -36,7 +36,6 @@ def getDistanceMatrix(cities: List[Tuple[int, int]]) -> List[List[float]]:
 # e.g. result[i] = 3 means that the individual at population[i] is the 4th
 # fittest individual in the current population (not 3rd because the fittest
 # is ranked 0)
-# todo maybe the opposite (ranking[0] = index of the best individual in population) ?
 def getRanking(population: List[Individual], cities, dist_mat) -> List[int]:
     return [sorted(population, key=lambda e: e.getFitness(), reverse=True).index(ind) for ind in population]
 
@@ -44,14 +43,12 @@ def getRanking(population: List[Individual], cities, dist_mat) -> List[int]:
 # returns a list of indexes of the individuals (in the population array)
 # selected to be in the current generation's mating pool
 # note: current selection method is to take only the best individuals
-# -> maybe a bit poor, todo  fitness proportionate selection?
 def selectMatingPool(ranking: List[int]) -> List[int]:
     return [i for i in range(population_size) if ranking[i] < mating_pool_size]
 
 
 # generates a child from 2 parents by keeping characteristics of both
 def crossover(parent1: Individual, parent2: Individual) -> Individual:
-    # todo >>> leave this part blank
 
     child_route = []
     child_genes = set()  # optimization for O(1) 'in'
@@ -83,7 +80,6 @@ def crossover(parent1: Individual, parent2: Individual) -> Individual:
 # be carried on to the next generation (elitism), according to the algorithm
 # parameters
 def elitistSelection(ranking: List[int]) -> List[int]:
-    # todo >>> leave this part blank
     return [i for i in range(population_size) if ranking[i] < elite_size]
 
 
