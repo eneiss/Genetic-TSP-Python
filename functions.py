@@ -7,7 +7,7 @@ Functions used by main.py in the different steps of the genetic algorithm
 """
 
 # set RNG seed for a repeatable execution
-random.seed(42)
+random.seed(rng_seed)
 
 
 # generates a random individual (route)
