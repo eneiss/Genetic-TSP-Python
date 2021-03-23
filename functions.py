@@ -37,7 +37,7 @@ def getDistanceMatrix(cities: List[Tuple[int, int]]) -> List[List[float]]:
 # fittest individual in the current population (not 3rd because the fittest
 # is ranked 0)
 # todo maybe the opposite (ranking[0] = index of the best individual in population) ?
-def getRanking(population: List[Individual], cities, dist_mat) -> List[int]:
+def getRanking(population: List[Individual]) -> List[int]:
     return [sorted(population, key=lambda e: e.getFitness(), reverse=True).index(ind) for ind in population]
 
 
