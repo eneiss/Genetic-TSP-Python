@@ -49,12 +49,12 @@ for it in range(nb_iter):
     # evolution tracking
     best_individual = population[ranking.index(0)]
     best_fitness.append(best_individual.getFitness())
-    # fixme best fitness sometimes regressing??
+    # fixed best fitness sometimes regressing??
     if it > 0 and best_fitness[it-1] - best_individual.getFitness() > 0.0001:   # epsilon for float error
         print("Is that a bug I see?", file=stderr)
 
     # debug & visuals : plot the best individual of each generation every now and then
-    if it % 100 == 0:
+    if it % (nb_iter//10) == 0:
         print(best_individual)
         best_individual.plot(cities)
 
